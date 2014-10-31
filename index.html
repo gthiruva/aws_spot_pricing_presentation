@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Saving Cabbage with AWS EC2 Spot Instances</title>
+    <script type="text/javascript" src="bower_components/platform/platform.js"></script>
+    <link rel="import" href="bower_components/polymer/polymer.html">
+    <link rel="import" href="bower_components/ninja-presentation/src/ninja-presentation.html">
+
+    <link href="http://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Port+Lligat+Slab" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+    <!-- link rel="stylesheet" href="http://viniciusalmeida.github.io/ninja-presentation/skins/ninjapresentation.skin.samplepresentation.css" -->
+    <style type="text/css">* {margin: 0; padding: 0;}</style>
+</head>
+<body>
+
+    <ninja-presentation font='Port Lligat Slab'>
+        <ninja-slide font='Port Lligat Slab' align='center'>
+          <h2>Saving Cabbage with AWS EC2 Spot Instances and Schedulable Tasks</h2>
+	  <br/>
+          <h4><small>Hastily Thrown Together by<br>George Thiruvathukal</small></h4>
+	  <br>
+          <p><small>2014-Oct-30</small></p>
+        </ninja-slide>
+
+        <ninja-slide font='Port Lligat Slab' align='center'>
+	  <h2>Do you like saving money?</h2><br/>
+          <p>Would you like to save up to 75% or more on the cose of your EC2 instances?<sup>*</sup></p>
+          <!--sup id="fn1" style='position:absolute; bottom:0px;'>1. Some restrictions apply!</sup-->
+        </ninja-slide>
+
+        <ninja-slide background='white' font='Port Lligat Slab' color='#000' align='center'>
+            <h2>On Demand Pricing</h2><br/>
+	    <img src="img/on_demand_prices.png" alt="On Demand Price Table"/>
+        </ninja-slide>
+
+        <ninja-slide background='white' font='Port Lligat Slab' color='#000' align='center'>
+            <h2>Spot Pricing</h2><br/>
+	    <img src="img/spot_prices.png" alt="Spot Instance Price Table"/>	    
+        </ninja-slide>
+
+        <ninja-slide font='Port Lligat Slab' align='center'>
+            <h2>Start with a Bid</h2><br/>
+	    <img src="img/make_bid.png" alt="On Demand Price Table"/>
+        </ninja-slide>
+
+        <ninja-slide font='Port Lligat Slab' align='center'>
+            <h2>Know how/when instances run</h2><br/>
+	    <img src="img/price_vs_bid.png" alt="Spot Instance Price Table"/>	    
+        </ninja-slide>
+
+	
+        <ninja-slide background='red' font='Port Lligat Slab' color='#FFF' align='center'>
+            <h2>Not For:</h2><br/>
+	    <ul>
+	      <li>24x7 tasks</li>
+	      <li>Uninterruptible tasks</li>
+	      <li>The 1%</li>
+	    </ul>
+        </ninja-slide>
+
+        <ninja-slide background='red' font='Port Lligat Slab' color='#FFF' align='center'>
+          <h2>Along came a unique recommendation engine</h2>
+	  <br/>
+	  <p>This one runs just once a month ...</p>
+	  <p>... but it runs for days. Nonstop.</p>
+	  <br/>
+	  <p><small>Algorithm bugs/hotfixes were potentially devastating</small></p>
+	  <p><small>This wouldn't last for long if subscribers kept growing</small></p>
+        </ninja-slide>
+
+	<ninja-slide background='green' font='Port Lligat Slab' color='#000' align='center'>
+          <h2>Luckily:</h2><br>
+	  <ul>
+	    <li>Fine Grained Parallelism to the rescue ...</li>
+	    <li>... And an opportunity to slash costs with EC2</li>
+	  </ul>
+        </ninja-slide>
+
+        <ninja-slide font='Port Lligat Slab' align='center'>
+          <h2>Option 1: Cron</h2><br/>
+	  <p>Great if the job is going to be of similar running time every time</p>
+        </ninja-slide>
+	
+        <ninja-slide font='Port Lligat Slab' align='left'>
+          <h2>Option 2: A Job Queue and a Python script walk into a database</h2><br/>
+	  <ol>
+	    <li>The script enqueues millions of jobs and calculates how many instances to run</li>
+	    <li>Uses AWS APIs to determine bids and which availability zones to use</li>
+	    <li>Then off to the races.</li>
+	    <li>After the finish, (a couple of hours later) the script uses the API to cancel the spot request</li>
+	    <li>Profit.</li>
+	  </ol>
+        </ninja-slide>
+
+        <ninja-slide font='Port Lligat Slab' align='center'>
+          <h2>Oh, yeah ...</h2><br/>
+	  <ul>
+	    <li>cron + job queue is even better</li>
+	    <li>Must not lose jobs in case spot price surges</li>
+	  </ul>
+        </ninja-slide>
+	
+	<ninja-slide font='Port Lligat Slab' align=left'>
+          <h2>API goodies</h2><br/>
+	  <ul>
+	    <li>DescribeSpotPriceHistory</li>
+	    <li>RequestSpotInstances</li>
+	    <li>DescribeSpotInstanceRequests</li>
+	    <li>CancelSpotInstanceRequests</li>
+	  </ul>
+        </ninja-slide>
+	
+        <ninja-slide background='white' font='Port Lligat Slab' color='#000' align='center'>
+	  <h2>Don't be that guy!</h2><br/>
+	  <img src="img/SpotPrice1000.png" alt="On Demand Price Table"/>
+        </ninja-slide>
+	
+    </ninja-presentation>
+
+    <img style="position: absolute; top: 0; right: 0; border: 0;"
+         src="img/aws_logo.jpeg"
+         alt="Fork me on GitHub">
+</body>
+</html>
